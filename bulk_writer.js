@@ -273,8 +273,7 @@ BulkWriter.prototype.ensureMappingTemplate = function ensureMappingTemplate(
       Number(thiz.options.elasticsearchVersion) >= 7
         ? indexTemplateGte7
         : indexTemplateLte6;
-    const rawdata = esVersionIndexTemplate;
-    mappingTemplate = JSON.parse(rawdata);
+    mappingTemplate = esVersionIndexTemplate;
     mappingTemplate.index_patterns = indexPrefix + '-*';
   }
 
