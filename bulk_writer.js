@@ -7,7 +7,7 @@ const debug = require('debug')('winston:elasticsearch');
 const retry = require('retry');
 
 const indexTemplateGte7 = require("./index-template-mapping-es-gte-7.json");
-const indexTemplateLte6 = require("./index-template-mapping-es-gte-6.json");
+const indexTemplateLte6 = require("./index-template-mapping-es-lte-6.json");
 
 const BulkWriter = function BulkWriter(transport, client, options) {
   this.transport = transport;
