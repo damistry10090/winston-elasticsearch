@@ -6,6 +6,9 @@ const Promise = require('promise');
 const debug = require('debug')('winston:elasticsearch');
 const retry = require('retry');
 
+const indexTemplateGte7 = require("./index-template-mapping-es-gte-7.json");
+const indexTemplateLte6 = require("./index-template-mapping-es-gte-6.json");
+
 const BulkWriter = function BulkWriter(transport, client, options) {
   this.transport = transport;
   this.client = client;
@@ -266,8 +269,11 @@ BulkWriter.prototype.ensureMappingTemplate = function ensureMappingTemplate(
   if (mappingTemplate === null || typeof mappingTemplate === 'undefined') {
     // es version 6 and below will use 'index-template-mapping-es-lte-6.json'
     // 7 and above will use 'index-template-mapping-es-gte-7.json'
-    const esVersion = Number(thiz.options.elasticsearchVersion) >= 7 ? 'gte-7' : 'lte-6';
-    const rawdata = fs.readFileSync('index-template-mapping-es-' + esVersion + '.json');
+    const esVersionIndexTemplate =
+      Number(thiz.options.elasticsearchVersion) >= 7
+        ? indexTemplateGte7
+        : indexTemplateLte6;
+    const rawdata = esVersionIndexTemplate;
     mappingTemplate = JSON.parse(rawdata);
     mappingTemplate.index_patterns = indexPrefix + '-*';
   }
