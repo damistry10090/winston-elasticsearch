@@ -267,9 +267,7 @@ BulkWriter.prototype.ensureMappingTemplate = function ensureMappingTemplate(
     // es version 6 and below will use 'index-template-mapping-es-lte-6.json'
     // 7 and above will use 'index-template-mapping-es-gte-7.json'
     const esVersion = Number(thiz.options.elasticsearchVersion) >= 7 ? 'gte-7' : 'lte-6';
-    const rawdata = fs.readFileSync(
-      path.join('.', 'index-template-mapping-es-' + esVersion + '.json')
-    );
+    const rawdata = fs.readFileSync('index-template-mapping-es-' + esVersion + '.json');
     mappingTemplate = JSON.parse(rawdata);
     mappingTemplate.index_patterns = indexPrefix + '-*';
   }
